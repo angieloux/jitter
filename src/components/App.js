@@ -10,6 +10,8 @@ import NotFound from './NotFound';
 import MessageDetail from './MessageDetail'
 import { reducer } from '../utils/reducer';
 import { StateContext } from '../utils/stateContext';
+// import { Typography } from '@mui/material';
+// import axios from 'axios'
 
 function App() {
   // useReducer handles all the states in the same object
@@ -31,15 +33,24 @@ function App() {
 
   // load the list in componentDidMount (not constructor)
   useEffect(() => {
+    // axios.get("http://localhost:4000/messages")
+    // .then(response => {
+    //   console.log(response.data)
+    //   dispatch({
+    //     type: "setMessageList", 
+    //     data: response.data
+    //   })
+    // })
+    // setMessageList(initialMessageList)
     dispatch({
-      type: "setMessageList", 
+      type: "setMessageList",
       data: initialMessageList
     })
   },[])
 
   return (
     <>
-    <h1>Jitter</h1>
+    {/* <Typography variant="h2">jitter</Typography> */}
 
     {/* Wrap all the components that use global states like loggedInUser and messageList in the state context provider */}
     <StateContext.Provider value={{store, dispatch}}>
@@ -53,7 +64,7 @@ function App() {
         <Route path="/" element={<Navigate to="messages" replace /> } />
         
 
-        {/* Message routes */}
+        {/* Message message routes */}
         <Route path="messages">
           {/* General route */}
           <Route index element={<Messages/>}/>
