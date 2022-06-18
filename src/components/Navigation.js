@@ -1,5 +1,9 @@
 
-const Navigation = ({loggedInUser}) => {
+const Navigation = ({loggedInUser, activateUser}) => {
+    const logout = (e) => {
+        e.preventDefault();
+        activateUser("")
+    }
     return (
         <nav>
             <a href="/">Home</a>
@@ -7,11 +11,11 @@ const Navigation = ({loggedInUser}) => {
 
             {loggedInUser ? 
                 <>
-                    {loggedInUser}
-                    <a href="/">Log out</a>
+                    Welcome, {loggedInUser}!
+                    <a href="/" onClick={logout}>Log out</a>
                 </> :
                 <>
-                    Guest
+                    Welcome, Guest!
                     <a href="/">Login</a>
                     <a href="/">Sign up</a>
                 </>
