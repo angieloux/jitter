@@ -1,9 +1,12 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { useGlobalState } from "../utils/stateContext";
 
-const MessageDetail = ({messageList}) => {
+const MessageDetail = () => {
+    const {store} = useGlobalState()
+    const {messageList} = store 
+
     const params = useParams()
-    console.log(params)
 
     const getMessage = (id) => {
         return messageList.find(m => m.id === parseInt(id))
