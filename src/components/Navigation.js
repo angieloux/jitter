@@ -1,40 +1,36 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { AppBar, Tabs, Toolbar, Typography, Tab } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { useGlobalState } from "../utils/stateContext";
 
 const Navigation = () => {
-    const {store, dispatch} = useGlobalState()
-    const {loggedInUser} = store
+  const { store, dispatch } = useGlobalState();
+  const { loggedInUser } = store;
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const logout = (e) => {
-        e.preventDefault();
-        dispatch({
-            type: "setLoggedInUser",
-            data: ""
-          })
-        navigate("/messages")
-    }
-    return (
-        <nav>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-
-            {loggedInUser ? 
-                <>
-                    Welcome, {loggedInUser}!
-                    <NavLink to="/messages/new">New message</NavLink>
-                    <NavLink to="/messages" onClick={logout}>Logout</NavLink>
-                </> :
-                <>
-                    Welcome, Guest!
-                    <NavLink to="/login">Login</NavLink>
-                    <NavLink to="/signup">Sign up</NavLink>
-                </>
-            }
-
-        </nav>
-    )
-}
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "setLoggedInUser",
+      data: "",
+    });
+    navigate("/messages");
+  };
+  return (
+    <AppBar position="sticky">
+      <Typography variant="h3">jitter</Typography>
+      <Toolbar>
+        <Tabs value={false}>
+          <Tab label="home" value="/messages" component={Link} to="/messages" />
+          <Tab label="about" component={Link} to="/about" />
+          {loggedInUser && <Tab label="new message" component={Link} to="/messages/new"/>}
+          {loggedInUser && <Tab label="logout" onClick={logout} component={Link} to="/messages"/>}
+          {!loggedInUser && <Tab label="login" component={Link} to="/login"/>}
+          {!loggedInUser && <Tab label="signup" component={Link} to="/login"/>}
+        </Tabs>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 export default Navigation;

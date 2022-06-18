@@ -1,3 +1,4 @@
+import { Button } from '@mui/material'
 import {useState} from 'react'
 import { useNavigate } from 'react-router'
 import { useGlobalState } from '../utils/stateContext'
@@ -53,8 +54,9 @@ const MessageForm = () => {
             <textarea type="text" name="text" value={formData.text} id="text" cols="30" rows="10" placeholder={`What's on your mind ${loggedInUser}?`} onChange={handleFormData}></textarea>
             </div>
             
-            <input type="submit" value="post" />
-            <button onClick={clearMessage}>Clear message</button>
+            <Button type="submit" variant="contained">Post message</Button>
+            <Button onClick={clearMessage} variant="contained">Clear message</Button>
+
         </form>
         </>
     )
