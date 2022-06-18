@@ -13,6 +13,17 @@ function App() {
     setLoggedInUser(username)
   }
 
+  const addMessage = (text) => {
+    const message = {
+      text: text,
+      user: loggedInUser,
+      id: messageList[messageList.length - 1].id + 1
+    }
+    setMessageList(
+      (messageList) => [...messageList, message]
+    )
+  }
+
   // load the list in componentDidMount (not constructor)
   useEffect(() => {
     setMessageList(initialMessageList)
@@ -25,7 +36,7 @@ function App() {
 
     {/* when user is NOT logged in, render the login form */}
     {loggedInUser ? 
-    <MessageForm loggedInUser={loggedInUser} /> 
+    <MessageForm loggedInUser={loggedInUser} addMessage={addMessage} /> 
     : 
     <LoginForm activateUser={activateUser}/>}
     <Messages messageList={messageList}/>

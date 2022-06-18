@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-const MessageForm = ({loggedInUser}) => {
+const MessageForm = ({loggedInUser, addMessage}) => {
     const initialFormData = {
         text: '',
     }
@@ -17,7 +17,14 @@ const MessageForm = ({loggedInUser}) => {
     const handleSubmit = (e) => {
         // adds the message to the list 
         e.preventDefault();
-        clearMessage()
+        if (formData.text === "") {
+            console.log("cant post an empty message!")
+        } else {
+            addMessage(formData.text)
+            clearMessage()
+        }
+        
+        
     }
     
     const clearMessage = () => {
