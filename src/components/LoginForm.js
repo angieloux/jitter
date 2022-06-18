@@ -1,14 +1,21 @@
 import {useState} from "react";
 import { useNavigate } from "react-router";
+import { useGlobalState } from "../utils/stateContext";
 
-const LoginForm = ({activateUser}) => {
+const LoginForm = () => {
+  const {dispatch} = useGlobalState()
+
   const navigate = useNavigate()
     const initialFormData = {user: '', password: ''} 
     const [formData, setFormData] = useState(initialFormData)
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        activateUser(formData.user)
+        // activateUser(formData.user)
+        dispatch({
+          type: "setLoggedInUser",
+          data: formData.user
+        })
         setFormData(initialFormData)
         navigate("/messages") // redirect to home page once user logs in
     }

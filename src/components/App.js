@@ -9,6 +9,7 @@ import About from './About';
 import NotFound from './NotFound';
 import MessageDetail from './MessageDetail'
 import { reducer } from '../utils/reducer';
+import { StateContext } from '../utils/stateContext';
 
 function App() {
   // useReducer handles all the states in the same object
@@ -26,26 +27,7 @@ function App() {
     // dispatch -> the function that triggers the  reducer function
 
   const [store, dispatch] = useReducer(reducer, initialState)
-  const {messageList, loggedInUser} = store
-
-  const activateUser = (username) => {
-    dispatch({
-      type: "setLoggedInUser",
-      data: username
-    })
-  }
-
-  const addMessage = (text) => {
-    const message = {
-      text: text,
-      user: loggedInUser,
-      id: messageList[0].id + 1
-    }
-    dispatch({
-      type: "addMessage",
-      data: message
-    })
-  }
+  const {loggedInUser} = store
 
   // load the list in componentDidMount (not constructor)
   useEffect(() => {
@@ -59,10 +41,12 @@ function App() {
     <>
     <h1>Jitter</h1>
 
+    {/* Wrap all the components that use global states like loggedInUser and messageList in the state context provider */}
+    <StateContext.Provider value={{store, dispatch}}>
     {/* Wrap all the components involved in the apps routing */}
     <Router>
       {/* Include the Navigation links within the Router tags as it uses the NavLink component (part of react-router-dom) */}
-    <Navigation loggedInUser={loggedInUser} activateUser={activateUser}/>
+    <Navigation/>
       <Routes>
 
         {/* Root route */}
@@ -72,28 +56,29 @@ function App() {
         {/* Message routes */}
         <Route path="messages">
           {/* General route */}
-          <Route index element={<Messages messageList={messageList}/>}/>
+          <Route index element={<Messages/>}/>
 
           {/* Nested routes */}
 
           {/* If the user is logged in, they can post a message */}
           <Route path="new" element={  
             loggedInUser ?
-              <MessageForm loggedInUser={loggedInUser} addMessage={addMessage}/>
+              <MessageForm/>
               :
               <Navigate to="/login"/>
               }/>
-          <Route path=":messageId" element={<MessageDetail messageList={messageList}/>}/>
+          <Route path=":messageId" element={<MessageDetail/>}/>
         </Route>
 
 
         <Route path="about" element={<About/>} />    
-        <Route path="login" element={<LoginForm activateUser={activateUser} />} />
+        <Route path="login" element={<LoginForm />} />
         {/*  for everything else (*) it will render the NotFound component */}
         <Route path="*" element={<NotFound/>}/> 
       
       </Routes>
     </Router>
+    </StateContext.Provider>
     </>
   )
 }

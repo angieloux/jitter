@@ -1,7 +1,10 @@
 import {useState} from 'react'
 import { useNavigate } from 'react-router'
+import { useGlobalState } from '../utils/stateContext'
 
-const MessageForm = ({loggedInUser, addMessage}) => {
+const MessageForm = () => {
+    const {store, dispatch} = useGlobalState()
+    const {loggedInUser, messageList} = store
     const navigate = useNavigate()
     const initialFormData = {
         text: '',
@@ -15,7 +18,6 @@ const MessageForm = ({loggedInUser, addMessage}) => {
             [e.target.name]: e.target.value
         })
     }
-    
     const handleSubmit = (e) => {
         // adds the message to the list 
         e.preventDefault();
@@ -27,8 +29,18 @@ const MessageForm = ({loggedInUser, addMessage}) => {
             navigate("/messages") // redirect to home page once user posts a new msg
         }
         
-        
     }
+    const addMessage = (text) => {
+        const message = {
+          text: text,
+          user: loggedInUser,
+          id: messageList[0].id + 1
+        }
+        dispatch({
+          type: "addMessage",
+          data: message
+        })
+      }
     
     const clearMessage = () => {
         setFormData(initialFormData);
