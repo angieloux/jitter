@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useReducer} from 'react'
 import Navigation from './Navigation';
 import LoginForm from './LoginForm';
 import MessageForm from './MessageForm';
@@ -8,36 +8,51 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import About from './About';
 import NotFound from './NotFound';
 import MessageDetail from './MessageDetail'
+import { reducer } from '../utils/reducer';
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState("")
-  const [messageList, setMessageList] = useState([])
+  // useReducer handles all the states in the same object
+  const initialState = {
+    messageList: [],
+    loggedInUser: ""
+  }
+
+  // useReducer RECEIVES two arguments:
+    // reducer -> a function that is executed when dispatch is called
+    // & state -> 
+
+  // it RETURNS an array with two elements:
+    // store -> the value of the state we are 'storing'
+    // dispatch -> the function that triggers the  reducer function
+
+  const [store, dispatch] = useReducer(reducer, initialState)
+  const {messageList, loggedInUser} = store
 
   const activateUser = (username) => {
-    setLoggedInUser(username)
+    dispatch({
+      type: "setLoggedInUser",
+      data: username
+    })
   }
 
   const addMessage = (text) => {
     const message = {
       text: text,
       user: loggedInUser,
-      id: messageList[nextId(messageList)]
+      id: messageList[0].id + 1
     }
-    setMessageList(
-      (messageList) => [...messageList, message]
-    )
-  }
-
-  function nextId(data) {
-    if(data.length === 0) return 1;
-    const sortData = data.sort((a,b) => a.id - b.id)
-    const nextId = sortData[sortData.length -1].id + 1
-    return nextId
+    dispatch({
+      type: "addMessage",
+      data: message
+    })
   }
 
   // load the list in componentDidMount (not constructor)
   useEffect(() => {
-    setMessageList(initialMessageList)
+    dispatch({
+      type: "setMessageList", 
+      data: initialMessageList
+    })
   },[])
 
   return (
