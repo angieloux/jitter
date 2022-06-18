@@ -1,6 +1,8 @@
 import {useState} from 'react'
+import { useNavigate } from 'react-router'
 
 const MessageForm = ({loggedInUser, addMessage}) => {
+    const navigate = useNavigate()
     const initialFormData = {
         text: '',
     }
@@ -22,6 +24,7 @@ const MessageForm = ({loggedInUser, addMessage}) => {
         } else {
             addMessage(formData.text)
             clearMessage()
+            navigate("/messages") // redirect to home page once user posts a new msg
         }
         
         

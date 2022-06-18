@@ -1,23 +1,29 @@
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navigation = ({loggedInUser, activateUser}) => {
+    
+    const navigate = useNavigate()
+
     const logout = (e) => {
         e.preventDefault();
         activateUser("")
+        navigate("/messages")
     }
     return (
         <nav>
-            <a href="/">Home</a>
-            <a href="/">About</a>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/about">About</NavLink>
 
             {loggedInUser ? 
                 <>
                     Welcome, {loggedInUser}!
-                    <a href="/" onClick={logout}>Log out</a>
+                    <NavLink to="/messages/new">New message</NavLink>
+                    <NavLink to="/messages" onClick={logout}>Logout</NavLink>
                 </> :
                 <>
                     Welcome, Guest!
-                    <a href="/">Login</a>
-                    <a href="/">Sign up</a>
+                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/signup">Sign up</NavLink>
                 </>
             }
 
