@@ -1,6 +1,8 @@
 import {useState} from "react";
+import { useNavigate } from "react-router";
 
 const LoginForm = ({activateUser}) => {
+  const navigate = useNavigate()
     const initialFormData = {user: '', password: ''} 
     const [formData, setFormData] = useState(initialFormData)
     
@@ -8,6 +10,7 @@ const LoginForm = ({activateUser}) => {
         e.preventDefault();
         activateUser(formData.user)
         setFormData(initialFormData)
+        navigate("/messages") // redirect to home page once user logs in
     }
 
   const handleFormData = (e) => {
