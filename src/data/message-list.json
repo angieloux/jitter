@@ -1,5 +1,5 @@
 [
-    {"text": "some text", "user": "angela"},
-    {"text": "hello from germany", "user": "harry"},
-    {"text": "wowwwwww", "user": "bob"}
+    {"id": "1", "text": "some text", "user": "angela"},
+    {"id": "2", "text": "hello from germany", "user": "harry"},
+    {"id": "3", "text": "wowwwwww", "user": "bob"}
 ]

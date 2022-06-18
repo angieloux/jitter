@@ -1,13 +1,10 @@
-// import Message from "./Message";
+import Message from "./Message";
 
 const Messages = ({messageList}) => {
     return (
         <>
         {messageList.map(message =>
-            <>
-                <p>{message.text}</p>   
-                <p>{message.user}</p>   
-            </>
+               <Message key={message.id} message={message}/>
         )}
         </>
     )

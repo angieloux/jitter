@@ -24,8 +24,10 @@ function App() {
     <Navigation loggedInUser={loggedInUser} activateUser={activateUser}/>
 
     {/* when user is NOT logged in, render the login form */}
-    {!loggedInUser && <LoginForm activateUser={activateUser}/>}
-    <MessageForm/>
+    {loggedInUser ? 
+    <MessageForm loggedInUser={loggedInUser} /> 
+    : 
+    <LoginForm activateUser={activateUser}/>}
     <Messages messageList={messageList}/>
     </>
   )
