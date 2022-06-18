@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
+
 const Message = ({message}) => {
     return (
         <>
             <h4>{message.text}</h4>   
-            Posted by: <span>{message.user}</span>   
+            <p>Posted by: {message.user}</p>   
+            <Link to={`${message.id}`}>View detail</Link>
         </>
     )
 }
