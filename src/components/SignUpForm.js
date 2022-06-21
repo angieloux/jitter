@@ -6,8 +6,8 @@ import { useGlobalState } from "../utils/stateContext";
 
 const SignUpForm = () => {
   const {dispatch} = useGlobalState()
-
   const navigate = useNavigate()
+  
     const initialFormData = {
         username: '',
         password: '',
@@ -20,15 +20,19 @@ const SignUpForm = () => {
         e.preventDefault();
         // activateUser(formData.user)
         signUp(formData)
-        .then(user => {
+          .then(({username, jwt}) => {
+            sessionStorage.setItem("username", username)
+            sessionStorage.setItem("token", jwt)
             dispatch({
-                type: "setLoggedInUser",
-                data: user.username
-              })
+              type: "setLoggedInUser",
+              data: username
             })
+            dispatch({
+              type: "setToken",
+              data: jwt
+            })
+          })
             .catch(e => {console.log(e)})
-
-
         
         setFormData(initialFormData)
         navigate("/messages") // redirect to home page once user logs in

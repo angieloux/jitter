@@ -10,9 +10,15 @@ const Navigation = () => {
 
   const logout = (e) => {
     e.preventDefault();
+    sessionStorage.clear() // clear the session storage on logout 
+    // sessionStorage.removeItem("username")
     dispatch({
       type: "setLoggedInUser",
-      data: "",
+      data: null
+    });
+    dispatch({
+      type: "setToken",
+      data: null
     });
     navigate("/messages");
   };

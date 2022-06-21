@@ -18,10 +18,16 @@ const LoginForm = () => {
         e.preventDefault();
         // activateUser(formData.user)
         logIn(formData)
-        .then(user => {
+        .then(({username, jwt}) => {
+          sessionStorage.setItem("username", username)
+          sessionStorage.setItem("token", jwt)
           dispatch({
             type: "setLoggedInUser",
-            data: user.username
+            data: username
+          })
+          dispatch({
+            type: "setToken",
+            data: jwt
           })
         })
         .catch(e => {console.log(e)})

@@ -5,3 +5,8 @@ export async function getMessages() {
     // console.log(response.data)
     return response.data;
 }
+
+export async function createMessage(data) {
+    const response = await jitterAPI.post('/messages', data);
+    return response.data;
+}
