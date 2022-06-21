@@ -11,14 +11,13 @@ import { reducer } from '../utils/reducer';
 import { StateContext } from '../utils/stateContext';
 import { getMessages } from '../services/messagesServices';
 import SignUpForm from './SignUpForm';
-// import { Typography } from '@mui/material';
-// import axios from 'axios'
 
 function App() {
   // useReducer handles all the states in the same object
   const initialState = {
     messageList: [],
-    loggedInUser: ""
+    loggedInUser: sessionStorage.getItem("username") || null,
+    token: sessionStorage.getItem("token") || null
   }
 
   // useReducer RECEIVES two arguments:
@@ -92,7 +91,7 @@ function App() {
 
 
         <Route path="about" element={<About/>} />    
-        <Route path="login" element={<LoginForm />} />
+        <Route path="signin" element={<LoginForm />} />
         <Route path="signup" element={<SignUpForm/>} />
         {/*  for everything else (*) it will render the NotFound component */}
         <Route path="*" element={<NotFound/>}/> 

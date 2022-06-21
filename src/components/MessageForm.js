@@ -1,11 +1,12 @@
 import { Button } from '@mui/material'
 import {useState} from 'react'
 import { useNavigate } from 'react-router'
+import { createMessage } from '../services/messagesServices'
 import { useGlobalState } from '../utils/stateContext'
 
 const MessageForm = () => {
     const {store, dispatch} = useGlobalState()
-    const {loggedInUser, messageList} = store
+    const {loggedInUser} = store
     const navigate = useNavigate()
     const initialFormData = {
         text: '',
@@ -25,22 +26,21 @@ const MessageForm = () => {
         if (formData.text === "") {
             console.log("cant post an empty message!")
         } else {
-            addMessage(formData.text)
+            addMessage(formData)
             clearMessage()
             navigate("/messages") // redirect to home page once user posts a new msg
         }
         
     }
-    const addMessage = (text) => {
-        const message = {
-          text: text,
-          username: loggedInUser,
-          id: messageList[0].id + 1
-        }
-        dispatch({
-          type: "addMessage",
-          data: message
+    const addMessage = (data) => {
+        createMessage(data)
+        .then(message => {
+            dispatch({
+                type: "addMessage",
+                data: message
+              })
         })
+        .catch(e => {console.log(e)})
       }
     
     const clearMessage = () => {
