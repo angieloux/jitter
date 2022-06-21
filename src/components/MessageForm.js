@@ -34,7 +34,7 @@ const MessageForm = () => {
     const addMessage = (text) => {
         const message = {
           text: text,
-          user: loggedInUser,
+          username: loggedInUser,
           id: messageList[0].id + 1
         }
         dispatch({

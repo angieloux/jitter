@@ -19,7 +19,8 @@ const MessageDetail = () => {
         <CardContent>
           <Card>
             <Typography variant="h5">{message.text}</Typography>
-            <Typography variant="p">Posted by: {message.user}</Typography>
+            <Typography variant="p">Posted by: {message.username}</Typography>
+            <Typography variant="p"> Posted: {message.posted}</Typography>
           </Card>
           <Card></Card>
         </CardContent>

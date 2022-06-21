@@ -1,31 +1,35 @@
-import { Button, TextField, InputLabel, Typography } from "@mui/material";
+import { Button, TextField, InputLabel, Typography, Card } from "@mui/material";
 import {useState} from "react";
 import { useNavigate } from "react-router";
-import { logIn } from "../services/authServices";
+import { signUp } from "../services/authServices";
 import { useGlobalState } from "../utils/stateContext";
 
-const LoginForm = () => {
+const SignUpForm = () => {
   const {dispatch} = useGlobalState()
 
   const navigate = useNavigate()
     const initialFormData = {
-      email: '',
-      password: ''
+        username: '',
+        password: '',
+        email: '',
+        password_confirmation: ''
     } 
     const [formData, setFormData] = useState(initialFormData)
     
     const handleSubmit = (e) => {
         e.preventDefault();
         // activateUser(formData.user)
-        logIn(formData)
+        signUp(formData)
         .then(user => {
-          dispatch({
-            type: "setLoggedInUser",
-            data: user.username
-          })
-        })
-        .catch(e => {console.log(e)})
-       
+            dispatch({
+                type: "setLoggedInUser",
+                data: user.username
+              })
+            })
+            .catch(e => {console.log(e)})
+
+
+        
         setFormData(initialFormData)
         navigate("/messages") // redirect to home page once user logs in
     }
@@ -39,19 +43,26 @@ const LoginForm = () => {
 
     return (
     <>
-    {/* LOGIN FORM */}
-    <Typography variant="h4">Log in</Typography>
+    <Typography variant="h4">Sign up</Typography>
+    {/* SIGNUP FORM */}
       <form onSubmit={handleSubmit}>
+        <Card>
+        <InputLabel>Username:</InputLabel>
+        <TextField type="text" name="username" id="username" value={formData.username} onChange={handleFormData}/>
+
         <InputLabel>Email:</InputLabel>
         <TextField type="email" name="email" id="email" value={formData.email} onChange={handleFormData}/>
 
         <InputLabel htmlFor="password">Password:</InputLabel>
         <TextField type="password" name="password" id="password" value={formData.password} onChange={handleFormData}/>
 
-        <Button type="submit" variant="contained">Login</Button>
+        <InputLabel htmlFor="password">Password confirmation:</InputLabel>
+        <TextField type="password" name="password_confirmation" id="password_confirmation" value={formData.password_confirmation} onChange={handleFormData}/>
+        </Card>
+        <Button type="submit" variant="contained">Register</Button>
       </form>
     </>
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

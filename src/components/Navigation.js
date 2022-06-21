@@ -25,8 +25,8 @@ const Navigation = () => {
           <Tab label="about" component={Link} to="/about" />
           {loggedInUser && <Tab label="new message" component={Link} to="/messages/new"/>}
           {loggedInUser && <Tab label="logout" onClick={logout} component={Link} to="/messages"/>}
-          {!loggedInUser && <Tab label="login" component={Link} to="/login"/>}
-          {!loggedInUser && <Tab label="signup" component={Link} to="/login"/>}
+          {!loggedInUser && <Tab label="signin" component={Link} to="/signin"/>}
+          {!loggedInUser && <Tab label="signup" component={Link} to="/signup"/>}
         </Tabs>
       </Toolbar>
     </AppBar>

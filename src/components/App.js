@@ -3,13 +3,14 @@ import Navigation from './Navigation';
 import LoginForm from './LoginForm';
 import MessageForm from './MessageForm';
 import Messages from './Messages';
-import initialMessageList from '../data/message-list.json'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import About from './About';
 import NotFound from './NotFound';
 import MessageDetail from './MessageDetail'
 import { reducer } from '../utils/reducer';
 import { StateContext } from '../utils/stateContext';
+import { getMessages } from '../services/messagesServices';
+import SignUpForm from './SignUpForm';
 // import { Typography } from '@mui/material';
 // import axios from 'axios'
 
@@ -41,11 +42,19 @@ function App() {
     //     data: response.data
     //   })
     // })
-    // setMessageList(initialMessageList)
-    dispatch({
-      type: "setMessageList",
-      data: initialMessageList
+    getMessages()
+    .then(messages => {
+      dispatch({
+        type: "setMessageList",
+        data: messages
     })
+    })
+    .catch(e => {console.log(e)})
+    // setMessageList(initialMessageList)
+  //   dispatch({
+  //     type: "setMessageList",
+  //     data: initialMessageList
+  //   })
   },[])
 
   return (
@@ -84,6 +93,7 @@ function App() {
 
         <Route path="about" element={<About/>} />    
         <Route path="login" element={<LoginForm />} />
+        <Route path="signup" element={<SignUpForm/>} />
         {/*  for everything else (*) it will render the NotFound component */}
         <Route path="*" element={<NotFound/>}/> 
       
